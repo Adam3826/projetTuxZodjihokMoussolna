@@ -13,29 +13,29 @@ public class testDico {
         Dico dico = new Dico(null);
         
         //niveau 1
-        dico.ajouteMotDico(1, "Fils");
-        dico.ajouteMotDico(1, "toto");
-        dico.ajouteMotDico(1, "riri");
+        dico.ajouteMotADico(1, "Fils");
+        dico.ajouteMotADico(1, "toto");
+        dico.ajouteMotADico(1, "riri");
         
         //niveau 2
-        dico.ajouteMotDico(2, "zahaavh");
-        dico.ajouteMotDico(2, "rururi");
-        dico.ajouteMotDico(2, "fzbzvvb");
+        dico.ajouteMotADico(2, "zahaavh");
+        dico.ajouteMotADico(2, "rururi");
+        dico.ajouteMotADico(2, "fzbzvvb");
         
         //niveau 3
-        dico.ajouteMotDico(3, "zfjubbv  ");
-        dico.ajouteMotDico(3, "vzvzvvjv");
-        dico.ajouteMotDico(3, "togbazi");
+        dico.ajouteMotADico(3, "zfjubbv  ");
+        dico.ajouteMotADico(3, "vzvzvvjv");
+        dico.ajouteMotADico(3, "togbazi");
         
         //niveau 4
         
-        dico.ajouteMotDico(4, "ZODJIHOUE");
-        dico.ajouteMotDico(4, "ADEBOLILO");
-        dico.ajouteMotDico(4, "ADAMMOUSS");
+        dico.ajouteMotADico(4, "ZODJIHOUE");
+        dico.ajouteMotADico(4, "ADEBOLILO");
+        dico.ajouteMotADico(4, "ADAMMOUSS");
         //niveau 5
-        dico.ajouteMotDico(5, "adam_hubert");
-        dico.ajouteMotDico(5, "zodjihok_moussolna");
-        dico.ajouteMotDico(5, "chaymae_barryma");
+        dico.ajouteMotADico(5, "adam_hubert");
+        dico.ajouteMotADico(5, "zodjihok_moussolna");
+        dico.ajouteMotADico(5, "chaymae_barryma");
         
         System.out.println(dico.getMotDepuisListeNiveau(1));
         System.out.println(dico.getMotDepuisListeNiveau(2));
