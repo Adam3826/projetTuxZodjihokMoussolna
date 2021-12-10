@@ -3,22 +3,22 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package game;
+package test;
+
+import game.Partie;
 
 
-public class LanceurDeJeu {
+public class TestPartie {
 
     /**
      * @param args the command line arguments
      */
-    
     public static void main(String[] args) {
-        
-        // initialiser le jeu
-        Jeu jeu = new JeuDevineLeMotOrdre();
-        
-        //Lancer le jeu
-        jeu.execute();
+        // TODO code application logic here
+        Partie partie = new Partie("24/11/2018 à 12:27", "maman" , 1);
+        partie.setTrouve(3);
+        partie.setTemps(10);
+        System.out.println(partie.toString());
     }
     
 }

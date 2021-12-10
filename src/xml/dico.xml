@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+
+
+<ns1:dictionaire
+    xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
+    xmlns:ns1='http://myGame/tux'
+    xsi:schemaLocation='http://myGame/tux XMLSchema/dico.xsd'>
+    
+    <ns1:mot niveau = "1">PIED</ns1:mot>
+    <ns1:mot niveau = "1">MUR</ns1:mot>
+    <ns1:mot niveau = "2">FENETRE</ns1:mot>
+    <ns1:mot niveau = "2">RECTANGLE</ns1:mot>
+    <ns1:mot niveau = "3">VÉHICULE</ns1:mot>
+    <ns1:mot niveau = "3">TUYAU</ns1:mot>
+    <ns1:mot niveau = "4">CASSOLETTE</ns1:mot>
+    <ns1:mot niveau = "4">RASOIR</ns1:mot>
+    <ns1:mot niveau = "5">APPUIE-TÊTE</ns1:mot>
+    <ns1:mot niveau = "5">ANTHÉCHRIST</ns1:mot>
+    <ns1:mot niveau = "5">ANTICONSTITUTIONNEL</ns1:mot>
+    <ns1:mot niveau = "5">SYNERGIE</ns1:mot>
+
+</ns1:dictionaire>
+
