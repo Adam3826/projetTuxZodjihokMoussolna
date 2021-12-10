@@ -24,12 +24,19 @@ and open the template in the editor.
     
 
     <xs:complexType name="Mot">
+        
         <xs:simpleContent>
-            <xs:extension base="xs:string">
+            <xs:extension base="dic:MotPossible">
                 <xs:attribute name="niveau" type="dic:Niveau" use="required"/>
             </xs:extension>     
         </xs:simpleContent>   
     </xs:complexType>
+    
+    <xs:simpleType name="MotPossible">
+        <xs:restriction base = "xs:string">
+            <xs:pattern value="([A-ZÀÂÉÈÊËÎÏÔÛ]){3,13}(-([A-ZÀÂÉÈÊËÎÏÔÛ]){3,13}){0,1}"/>
+        </xs:restriction>
+    </xs:simpleType>
     
     <!--on fait une restriction pour dire que les valeur de
     l'attribut niveau sont comprise entre zero et cinq-->
@@ -42,6 +49,58 @@ and open the template in the editor.
             <xs:minExclusive value="0"/>
             <xs:maxInclusive value="5"/>
         </xs:restriction>    
-    </xs:simpleType>
+    </xs:simpleType> -->
     
 </xs:schema>
+
+
+<!-- <?xml version="1.0"?>
+
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           targetNamespace="http://myGame/tux" 
+           xmlns = "http://myGame/tux"
+           xmlns:tux = "http://myGame/tux"
+           elementFormDefault="qualified">
+    
+    <xs:element name = "dictionaire" type = "Dictionnaire"/>
+
+    <xs:complexType name = "Dictionnaire">
+        <xs:sequence>
+            <xs:element name="mot" type="Mot" minOccurs="1" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+    
+    <xs:complexType name="Mot">
+        <xs:simpleContent>
+            <xs:extension base="xs:string">
+                <xs:attribute name="niveau" type="Niveau" use="required"/>
+                <xs:attribute name="mot" type="MotPossible" use="required"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+    
+    <xs:simpleType name="MotPossible">
+        <xs:restriction base = "xs:string">
+            <xs:pattern value="([A-ZÀÂÉÈÊËÎÏÔÛ]){3,13}(-([A-ZÀÂÉÈÊËÎÏÔÛ]){3,13}){0,1}"/>
+        </xs:restriction>
+    </xs:simpleType>
+    
+    
+    <xs:simpleType name="Niveau">
+        <xs:restriction base="xs:int">
+        <xs:minInclusive value="1"/>
+        <xs:maxInclusive value="5"/>
+        </xs:restriction>
+    </xs:simpleType>
+    
+    
+</xs:schema>
+
+
+-->
+
