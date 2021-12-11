@@ -18,8 +18,18 @@ public class Jeu {
     private Room room;
     private Profil profil;
     private Tux tux;
-    //private Partie partie;
+    //soit le mot tiré du dico soit on le definie de maniere 
+    //aleatoire comme dans la partie 7.30
 
+    private Dico dico;
+
+    ArrayList<Letter> lettres;
+
+    public ArrayList<Letter> getLettres() {
+        return lettres;
+    }
+
+    //private Partie partie;
     public Jeu() {
 
         // Crée un nouvel environnement
@@ -27,7 +37,6 @@ public class Jeu {
 
         // Instancie une Room
         room = new Room();
-        
 
         // Règle la camera
         env.setCameraXYZ(50, 60, 175);
@@ -37,6 +46,10 @@ public class Jeu {
         env.setDefaultControl(false);
 
         profil = new Profil();
+
+        lettres = new ArrayList<>();
+
+       
 
     }
 
@@ -55,10 +68,44 @@ public class Jeu {
         env.setRoom(room);
 
         // Instancie un Tux
-        tux = new Tux(env ,room);
+        tux = new Tux(env, room);
         env.addObject(tux);
-        
 
+        /* 
+        _______________________________________________________________________________________________________
+                recupration des lettre d'un mot et ajout
+                a l'environnement de manniere aleatoire
+        _______________________________________________________________________________________________________
+        
+         */
+        dico = new Dico("src/xml/dico.xml");
+         
+        dico.lireDictionnaireDom("src/xml","dico.xml");
+        
+        //le niveau sera changé quand on va gerer les partie ou l'utilisateur doit designer des niveau lui meme
+        String mot = dico.getMotDepuisListeNiveau(1);
+        
+       
+        char[] c = mot.toCharArray();
+
+        for (char e : c) {
+
+            Letter l = new Letter(e, positonLettreSelonX(), positionLettresSelonY());
+            lettres.add(l);
+
+        }
+
+        /*for(Letter e:lettres){
+            env.addObject(e);
+        }  c'est pareil*/
+        lettres.forEach(e -> {
+            env.addObject(e);
+        });
+
+        /*
+        _______________________________________________________________________________________________________
+        _______________________________________________________________________________________________________
+         */
         // Ici, on peut initialiser des valeurs pour une nouvelle partie
         démarrePartie(partie);
 
@@ -88,10 +135,27 @@ public class Jeu {
 
     }
 
-    protected void démarrePartie(Partie partie){}
+    protected void démarrePartie(Partie partie) {
+    }
 
-    protected  void appliqueRegles(Partie partie){}
+    protected void appliqueRegles(Partie partie) {
+    }
 
-    protected  void terminePartie(Partie partie){}
+    protected void terminePartie(Partie partie) {
+    }
+
+    private double positonLettreSelonX() {
+        double x = 0.0;
+        x = Math.random() * ((room.getWidth() - 2) - 1);
+        return x;
+    }
+
+    private double positionLettresSelonY() {
+        double y = 0.0;
+
+        y = Math.random() * ((room.getDepth() - 2) - 1);
+
+        return y;
+    }
 
 }
