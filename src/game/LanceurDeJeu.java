@@ -5,36 +5,20 @@
  */
 package game;
 
-import env3d.Env;
-
 /**
  *
  * @author zodji
  */
-
-//import env3d.advanced.EnvNode;
-
 public class LanceurDeJeu {
-    public static void main(String[] args) {
+  public static void main(String args[]) {
+      
+        Jeu jeu;
         
         // Declare un Jeu
-       
-       
-      
-       
-        
-     
-        
-        Jeu jeu;
-        jeu = new Jeu();
         //?!!?;
         //Instancie un nouveau jeu
-        //?!!?;
-        jeu.execute();
-       
+        jeu =new Jeu();
         //Execute le jeu
-        //?!!?;
-        
+        jeu.execute();
     }
-    
 }

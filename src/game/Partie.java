@@ -10,11 +10,9 @@ package game;
  * @author zodji
  */
 public class Partie {
-    
-    public Partie(){
-        
-    
-    
+
+    public Partie() {
     }
+    
     
 }

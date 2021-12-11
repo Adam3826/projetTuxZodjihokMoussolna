@@ -9,10 +9,11 @@ package game;
  *
  * @author zodji
  */
+public class Room {
+    
 
 
-public class Room{
-    //les attributs
+
 
     private int depth;
     private int height;
@@ -27,7 +28,6 @@ public class Room{
     //constructeurs
 
     Room() {
-        // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         this.depth = 100;
         this.height = 60;
         this.width = 100;
@@ -41,16 +41,32 @@ public class Room{
 
     
 
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 
     //getters and setters
     public int getDepth() {
         return depth;
     }
-
-
-    
-    
-
     public void setDepth(int depth) {
         this.depth = depth;
     }
@@ -108,3 +124,5 @@ public class Room{
 
 
 }
+    
+ 

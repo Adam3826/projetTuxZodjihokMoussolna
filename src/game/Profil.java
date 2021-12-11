@@ -10,7 +10,9 @@ package game;
  * @author zodji
  */
 public class Profil {
+
+    public Profil() {
+    }
     
-    
-    
+   
 }
