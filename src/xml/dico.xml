@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+
+
+<dictionnaire
+    xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
+    xsi:noNamespaceSchemaLocation='../XSD/dico.xsd'>
+    <mot niveau="2">licence</mot>
+    <mot niveau="3">miage</mot>
+    <mot niveau="5">regroupement</mot>
+    <mot niveau="4">expression</mot>
+    <mot niveau="3">france</mot>
+    
+    <mot niveau="1">bonjour</mot>
+    
+    <mot niveau="1">hubert</mot>
+    <mot niveau="4">tremblement</mot>
+    <mot niveau="5">mastermiage</mot>
+
+</dictionnaire>
