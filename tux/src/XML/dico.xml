@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+
+<dic:dictionnaire
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:dic="http://myGame/tux"
+    xsi:schemaLocation="http://myGame/tux ../xsd/dico.xsd">
+    
+    <dic:mot niveau="2">EXAMEN</dic:mot>
+    <dic:mot niveau="4">DEMANDE</dic:mot>
+    <dic:mot niveau="5">CONSTITUTION</dic:mot>
+    <dic:mot niveau="3">LOYER</dic:mot>
+    <dic:mot niveau="1">MIAGE</dic:mot>
+    <dic:mot niveau="2">BONJOUR</dic:mot>
+    <dic:mot niveau="4">REDACTION</dic:mot>
+    <dic:mot niveau="4">direction</dic:mot>
+</dic:dictionnaire>
+  

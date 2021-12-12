@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+
+
+<pf:profil
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:pf="http://myGame/tux"
+    xsi:schemaLocation="http://myGame/tux ../xsd/profil.xsd">
+    <pf:nom>Alban</pf:nom>
+    <pf:avatar>conan.jpg</pf:avatar>
+    <pf:anniversaire>2006-05-08</pf:anniversaire>
+    <pf:parties>
+        <pf:partie date="2013-12-10" >
+            <pf:mot niveau="1">cle</pf:mot>
+            <pf:temps>20.0</pf:temps>
+        </pf:partie>
+        <pf:partie date="2013-12-11" trouvé="75%">
+            <pf:mot niveau="2">indice</pf:mot>
+            
+        </pf:partie>
+        <pf:partie date="2013-12-11" trouvé="">
+            <pf:mot niveau="2">indice</pf:mot>
+            <pf:temps>20.0</pf:temps>
+        </pf:partie>
+    </pf:parties>
+
+</pf:profil>

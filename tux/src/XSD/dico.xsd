@@ -1,0 +1,55 @@
+<?xml version="1.0"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+
+<xs:schema targetNamespace="http://myGame/tux"
+           xmlns:dic="http://myGame/tux"
+           xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           elementFormDefault="qualified">
+    <xs:element name="dictionnaire" type="dic:Dictionnaire"/>
+    
+    <xs:complexType name="Dictionnaire">
+        <xs:sequence>
+            <!--il doit y avoir au moin un mot dans le dictionnaire-->
+            <xs:element name="mot" type="dic:Mot" minOccurs ="5" maxOccurs="unbounded"/>      
+        </xs:sequence>
+
+    </xs:complexType>
+    
+    <!--ici on fait une heritage  ce qui s'explique par
+    le simplecontent pour tout element qui herite du  type complexe qui herite a son tour d'un type primitif-->
+    
+
+    <xs:complexType name="Mot">
+        
+        <xs:simpleContent>
+            <xs:extension base="dic:MotPossible">
+                <xs:attribute name="niveau" type="dic:Niveau" use="required"/>
+            </xs:extension>     
+        </xs:simpleContent>   
+    </xs:complexType>
+    
+    <xs:simpleType name="MotPossible">
+        <xs:restriction base = "xs:string">
+            <xs:pattern value="([a-zA-ZÀÂÉÈÊËÎÏÔÛ]){3,13}(-([a-zA-ZÀÂÉÈÊËÎÏÔÛ]){3,13}){0,1}"/> <!--n'importe quel mot de minimum 3 lettres, maximum 13 ou mot composé de minimum 6 lettres, max 26 majuscules et minuscule uniquement-->
+        </xs:restriction>
+    </xs:simpleType>
+    
+    <!--on fait une restriction pour dire que les valeur de
+    l'attribut niveau sont comprise entre zero et cinq-->
+    
+    
+    
+    
+    <xs:simpleType name="Niveau">
+        <xs:restriction base="xs:int">
+            <xs:minExclusive value="0"/>
+            <xs:maxInclusive value="5"/>
+        </xs:restriction>    
+    </xs:simpleType>
+    
+</xs:schema>
+
