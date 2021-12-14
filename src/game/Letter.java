@@ -16,23 +16,34 @@ import env3d.EnvObject;
 public class Letter extends EnvObject {
     
     private char letter;
+
+    
     //on declare l'environnelment dans lequel se trouvera les mots
     private Env env;
 
     
-    
+    //constructeurs de la classe letter
     Letter(char l, double x ,double y){
         
-        this.letter=l;
-        //this.setScale(4.0);
+        setLetter(l);
+        this.setScale(4.0);
         this.setY(4.0);
         this.setX(x);
         this.setZ(y);
+       // ajoutLetter("s");
        
 
      
                 
     }
+    
+    /*private void ajoutLetter(String  letters){
+      String mot=letters;
+      for (int i =0;i<mot.length();i++){
+          letter= mot.charAt(i);
+          setLetter(letter);
+      }
+    }*/
     
  
     
@@ -42,14 +53,14 @@ public class Letter extends EnvObject {
          //ces lettre et cubes sont disponible dans le dossier de l'archive telecharger 
          //d'ou il faut mettre lechemin vers  et l'objet cube et les lettres
         if (letter == ' ') {
-            this.setTexture("textures/letter/cube.png");
+            this.setTexture("models/cube/cube.png");
         } else {
-            this.setTexture("textures/letter/" + letter + ".png");
+            this.setTexture("models/letter/" + letter + ".png");
         }
         
-        //ici c'est le model objete de la lettre 
-        this.setModel("textures/letter/cube.obj");
-        this.letter = letter;
+        //ici c'est le model objet de la lettre 
+        this.setModel("models/cube/cube.obj");
+       
     }
     
     public char getLetter() {
