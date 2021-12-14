@@ -1,140 +1,116 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package game;
 
-
-import com.sun.org.apache.xerces.internal.parsers.DOMParser;
 import java.util.ArrayList;
-import java.util.Random;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.NodeList;
 
-public final class Dico {
+/**
+ *
+ * @author zodji
+ */
+public class Dico {
     
-    public Document _doc;
-    
+   
+
     private ArrayList<String> listeNiveau1;
     private ArrayList<String> listeNiveau2;
     private ArrayList<String> listeNiveau3;
     private ArrayList<String> listeNiveau4;
     private ArrayList<String> listeNiveau5;
-    
     private String cheminFichierDico;
-    
-    public Dico(String cheminFichierDico){
-        listeNiveau1 = new ArrayList<String>();
-        listeNiveau2 = new ArrayList<String>();
-        listeNiveau3 = new ArrayList<String>();
-        listeNiveau4 = new ArrayList<String>();
-        listeNiveau5 = new ArrayList<String>();
-        
-        this.cheminFichierDico = cheminFichierDico;
-        
-        _doc = fromXML(cheminFichierDico);
 
-        NodeList dicoNodeList = _doc.getElementsByTagName("ns1:mot"); 
-        
-        System.out.println("nm de mot dans dic est "+dicoNodeList.getLength());
-        
-        for(int i =0 ; i <dicoNodeList.getLength(); i++) 
-        {
-            
-            int j = 2 * i + 1;
-            //int niveau = Integer.parseInt(dicoNodeList.item(j).getAttributes().getNamedItem("niveau").getNodeValue() );
-            int niveau = Integer.parseInt(dicoNodeList.item(i).getAttributes().getNamedItem("niveau").getNodeValue());
-            String mot = new String( dicoNodeList.item(i).getTextContent()  );
-                    //.item(i).getTextContent();
-            switch (niveau) {
-                    case 1 :
-                        this.listeNiveau1.add(mot);
-                        break;
-                    case 2 :
-                        this.listeNiveau2.add(mot);
-                        break;
-                    case 3 :
-                        this.listeNiveau3.add(mot);
-                        break;
-                    case 4 :
-                        this.listeNiveau4.add(mot);
-                        break;
-                    case 5 :
-                        this.listeNiveau5.add(mot);
-                        break;
-            }     
-        }
+    private int niveau;
+    public Dico(String cheminFichierDico) {
+
+        this.listeNiveau1 = new ArrayList<String>();
+        this.listeNiveau1 = new ArrayList<String>();
+        this.listeNiveau2 = new ArrayList<String>();
+        this.listeNiveau3 = new ArrayList<String>();
+        this.listeNiveau4 = new ArrayList<String>();
+        this.listeNiveau5 = new ArrayList<String>();
+        this.cheminFichierDico = cheminFichierDico;
     }
-    
-    public String getMotDepuisListeNiveaux(int niveau){   
-        switch (vérifieNiveau(niveau)) {
-            case 1:
-                return this.getMotDepuisListe(listeNiveau1);
-            case 2:
-                return this.getMotDepuisListe(listeNiveau2);
-            case 3:
-                return this.getMotDepuisListe(listeNiveau3);
-            case 4:
-                return this.getMotDepuisListe(listeNiveau4);
+
+    //selectionne une liste selon un niveau fourni en parametre
+    public String getMotDepuisListeNiveau(int niveau) {
+        //si la taile du tableau de la liste des  mots du meme Niveau est egale a zero on retourne un mot par defaut
+        String s = "";
+        switch (vérifierNiveau(niveau)) {
+
             case 5:
-                return this.getMotDepuisListe(listeNiveau5);
-            default :
-                return this.getMotDepuisListe(listeNiveau1);
+                s = getMotDepuisListe(listeNiveau5);
+            case 4:
+                s = getMotDepuisListe(listeNiveau4);
+            case 3:
+                s = getMotDepuisListe(listeNiveau3);
+            case 2:
+                s = getMotDepuisListe(listeNiveau2);
+            case 1:
+                s = getMotDepuisListe(listeNiveau1);
+            default:
+                break;
+
         }
+        return s;
+
     }
-    
+    // a utiliser pour le DOM
     public void ajouteMotADico(int niveau, String mot) {
-        switch (vérifieNiveau(niveau)) {
-            case 1:
-                this.listeNiveau1.add(mot);
-                break;
-            case 2:
-                this.listeNiveau2.add(mot);
-                break;
-            case 3:
-                this.listeNiveau3.add(mot);
-                break;
-            case 4:
-                this.listeNiveau4.add(mot);
-                break;
+        switch (vérifierNiveau(niveau)) {
+
             case 5:
-                this.listeNiveau5.add(mot);
+                listeNiveau5.add(mot);
+            case 4:
+                listeNiveau4.add(mot);
+            case 3:
+                listeNiveau3.add(mot);
+            case 2:
+                listeNiveau2.add(mot);
+            case 1:
+                listeNiveau1.add(mot);
+            default:
                 break;
+
         }
     }
-    
-    public String getCheminFichierDico(){
-        return this.cheminFichierDico;
+
+    public String getChemeinFichierDico() {
+        return cheminFichierDico;
     }
-    
-    private int vérifieNiveau(int niveau){
-        if(niveau >= 1 && niveau <= 5){
-            return niveau;
+
+    private int vérifierNiveau(int niveau) {
+        int niv = 0;
+        //on verifie le niveau etant donné que dans notre cas le niveau est compri entre 1 et 5 alors 
+        //si e niveau n'est pas dns cet interval on retourne un niveau 5 par defaut
+        if (niveau < 1 || niveau > 5) {
+            niv = 5;
+        } else {
+            niv = niveau;
         }
-        return 1;
+
+        return niv;
+    }
+
+    //creation de la liste de niveau des mots en d'autre terme pour chaque niveau de 1 à 5 il y a une liste de mot
+    /* public void listeDeNiveauDeMot() {
+        this.listNiveaudeMot = new ArrayList[5];
+        for (int i = 0; i < 5; i++) {
+            this.listNiveaudeMot[i] = new ArrayList<String>();
+        }
+    }*/
+    //extrait un mot au hasard d'une liste donnée
+    private String getMotDepuisListe(ArrayList<String> list) {
+        String mots;
+        int index;  //indice du mot choisi
+        double randomDouble = java.lang.Math.random();
+        randomDouble = list.size() * randomDouble; //proportion entre la taille du double et la taille de l'arraylist
+        index = (int) randomDouble;
+        mots = list.get(index);
+
+        return mots;
     }
     
-    private String getMotDepuisListe(ArrayList<String> list){
-        String mot = "vide";
-        Random rand = new Random();
-        if ( !list.isEmpty() ){
-            int nbAleatoire = rand.nextInt( list.size() );
-            mot = list.get(nbAleatoire);
-        }
-        return mot;
-    }
-    
-    public Document fromXML(String nomFichier) {
-        Document document = null;
-        DOMParser parser = null;
-        try {
-            parser = new DOMParser();
-            parser.parse(nomFichier);
-            return document = parser.getDocument();
-            //return XMLUtil.DocumentFactory.fromFile(nomFichier);
-        }catch(Exception e){
-          
-        }
-        /*} catch (Exception ex) {
-            Logger.getLogger(Profil.class.getName()).log(Level.SEVERE, null, ex);
-        }*/
-        return null;
-    }
 }

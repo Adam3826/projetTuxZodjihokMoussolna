@@ -5,20 +5,20 @@
  */
 package game;
 
-
+/**
+ *
+ * @author zodji
+ */
 public class LanceurDeJeu {
-
-    /**
-     * @param args the command line arguments
-     */
-    
-    public static void main(String[] args) {
+  public static void main(String args[]) {
+      
+        Jeu jeu;
         
-        // initialiser le jeu
-        Jeu jeu = new JeuDevineLeMotOrdre();
-        
-        //Lancer le jeu
+        // Declare un Jeu
+        //?!!?;
+        //Instancie un nouveau jeu
+        jeu = new JeuDevineLeMotOrdre();
+        //Execute le jeu
         jeu.execute();
     }
-    
 }

@@ -1,59 +1,103 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package game;
 
-import com.sun.org.apache.xerces.internal.parsers.DOMParser;
+/**
+ *
+ * @author zodji
+ */
+
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import game.Profil;
 
-public class Partie{
-    
-    private final String date;
-    private final String mot;
-    private final int niveau;
-    private int trouve;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.lang.Object;
+import java.util.Random;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
+
+
+public class Partie {
+    private String date;
+    private String mot;
+    private int trouvé;
     private int temps;
+    boolean finPartie;
+    private int niveau;
+     Partie(){}
     
-    public Partie(String date, String mot, int niveau ){
+    public Partie(String date, String mot, int niveau) {
         this.date = date;
         this.mot = mot;
         this.niveau = niveau;
-        this.trouve = 0;
-        this.temps = 0;
+        this.finPartie = false;
     }
+
     
-    public Partie(Element partieElt ){
-        this.date = Profil.xmlDateToProfileDate(partieElt.getAttribute("date"));
+  
+    public Partie(Element partieElt) {
+        this.date = partieElt.getAttribute("ns1:date");
         this.mot = partieElt.getElementsByTagName("ns1:mot").item(0).getTextContent();
-        this.niveau = Integer.parseInt(  ((Element )partieElt.getElementsByTagName("ns1:mot").item(0)).getAttribute("niveau")  );
-        this.trouve = Integer.parseInt(partieElt.getAttribute("trouve").replace("%", ""));
-        this.temps = Integer.parseInt(partieElt.getElementsByTagName("ns1:temps").item(0).getTextContent());
+        Element m = (Element)partieElt.getElementsByTagName("ns1mot").item(0);
+        this.niveau = Integer.parseInt(m.getAttribute("ns1:niveau")) ;
+        
+        if (partieElt.hasAttribute("trouvé")) {
+            this.trouvé = Integer.parseInt(partieElt.getAttribute("trouvé").replace("%", ""));
+        }
+        else 
+            trouvé = 0;
+        System.out.println("Trouvé: " + trouvé);
+        if (partieElt.getFirstChild().getNodeName().equals("ns1:temps"))
+            this.temps = Integer.parseInt(partieElt.getElementsByTagName("ns1:temps").item(0).getTextContent());
+        else
+            temps = 0;
     }
-    
-    public Element getPartie(Document doc){
-        return (Element )doc.getDocumentElement().getElementsByTagName("parties");
+}    
+   
+    /*
+    public void setTrouve(int nbLettresRestantes) {
+        trouvé= ((this.mot.length()-nbLettresRestantes)*100)/this.mot.length();
     }
-    
-    public void setTrouve(int nbLettresRestantes){
-            this.trouve = (int )( ( ( this.mot.length() - nbLettresRestantes ) / this.mot.length() ) * 100 )  ;
-    }
-    
-    public void setTemps(int temps){
+    public void setTemps(int temps) {
         this.temps = temps;
+    }  
+    
+    public int getTrouve(){
+        return trouvé;
     }
     
-    public int getNiveau(){
-        return this.niveau;
+    public int getNiveau() {
+        return niveau;
     }
     
-    public String getMot(){
-        return this.mot;
+    public String getMot() {
+        return mot;
     }
     
+    public String getTemps() {
+        return Integer.toString(temps);
+    }
+     
+    public String getDate(){
+        return date;
+    }
+    
+    @Override
     public String toString() {
-        return "-La date de partie :\n" + this.date
-                + "-Le mot de cette partie :\n" + this.mot
-                + "-Le niveau du mot :\n" + this.niveau
-                + "-Le temps de cette partie : \n" + this.temps
-                + "-Le pourcentage de la partie : \n" + this.trouve + "%";
+        String str = "";
+        str += "Date: " + getDate() + "\nMot à trouver: " + getMot()+"\nNiveau du mot: "+getNiveau();
+        str += "\nTemps de la partie: "+getTemps()+" secondes\nPourcentage de lettre trouvé: "+getTrouve()+"%.";
+        
+        return str;
     }
+    
 }
+    
+*/

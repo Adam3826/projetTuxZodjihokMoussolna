@@ -1,138 +1,176 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package game;
 
-import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+/**
+ *
+ * @author zodji
+ */
+
+
+
+import java.io.File;
+import java.io.IOException;
 import org.w3c.dom.Document;
-import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
-import com.sun.org.apache.xerces.internal.parsers.DOMParser;
-import game.Partie;
+import java.util.ArrayList;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerConfigurationException;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+import org.w3c.dom.Attr;
+import org.w3c.dom.Element;
+import org.xml.sax.SAXException;
 
 public class Profil {
-    
-    public Document _doc;
+    Profil(){}
+    public boolean charge(String nom) {
+    boolean existe = false;
+        return existe;
+    }
 
     private String nom;
-    private String dateNaissance;
     private String avatar;
+    private String dateNaissance;
     private ArrayList<Partie> parties;
     private boolean existe = false;
-
-    // Cree un nouveau profil
-    public Profil(String nomJoueur, String dateNaissance ) {
-        this.nom = nomJoueur;
-        this.dateNaissance = dateNaissance;
-        this.avatar = "";
-        this.parties = new ArrayList<Partie>();
-        this.existe = true;
-    }
     
-    public Profil(String nomFichier ) {
-        try{
-        _doc = fromXML(nomFichier);
-        this.nom = _doc.getDocumentElement().getElementsByTagName("ns1:nom").item(0).getTextContent();
-        this.dateNaissance = xmlDateToProfileDate(_doc.getDocumentElement().getElementsByTagName("ns1:anniversaire").item(0).getTextContent());
-        this.avatar = _doc.getDocumentElement().getElementsByTagName("ns1:avatar").item(0).getTextContent();
-        NodeList partieNodeList = _doc.getDocumentElement().getElementsByTagName("ns1:partie");
-        this.parties = getParties(partieNodeList);
-        this.existe = true;
-        }catch(Exception e){
-            System.out.println("Ce joueur n'existe pas");
-        }
-    }
+    public Document _doc;
+   
     
-    private ArrayList<Partie> getParties(NodeList partieNodeList)
-    {
-        ArrayList<Partie> parties = new ArrayList<Partie>();
-        int taille = partieNodeList.getLength();
-        for ( int i = 0 ; i < taille ; i++ )
-        {
-            parties.add( new Partie((Element )partieNodeList.item(i) ) );
+     //Cree un DOM à partir d'un fichier XML
+    public Profil(String nomFichier) throws SAXException, IOException, ParserConfigurationException {
+        File xmlFile = new File("src/xml/"+nomFichier+".xml");
+        DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+        DocumentBuilder dBuilder;
+        dBuilder = dbFactory.newDocumentBuilder();
+        Document doc = dBuilder.parse(xmlFile);
+        Element nomElt = (Element) doc.getElementsByTagName("ns1:nom").item(0);
+        nom = nomElt.getTextContent();
+        Element avatarElt = (Element) doc.getElementsByTagName("ns1:avatar").item(0);
+        avatar = avatarElt.getTextContent();
+        Element annivElt = (Element) doc.getElementsByTagName("ns1:anniversaire").item(0);
+        dateNaissance = annivElt.getTextContent();
+        
+        parties= new ArrayList<>(); //<Partie>
+        
+        NodeList nodeList = doc.getElementsByTagName("ns1:partie");
+        for (int i = 0; i < nodeList.getLength(); i++) {
+            Element partieElt = (Element) nodeList.item(i);
+            
+            Partie partie = new Partie(partieElt);
+            parties.add(partie);
         }
-        return parties;   
-    }
-    
-    public boolean charge(String nomJoueur)
-    {
-        return this.existe;   
-    }
-
-    // Cree un DOM à partir d'un fichier XML
-    public Document fromXML(String nomFichier) {
-        Document document = null;
-        DOMParser parser = null;
-        try {
-            parser = new DOMParser();
-            parser.parse(nomFichier);
-            return document = parser.getDocument();
-            //return XMLUtil.DocumentFactory.fromFile(nomFichier);
-        }catch(Exception e){
-            System.out.println("Erreur création de pointeur fichier");
-        }
-        /*} catch (Exception ex) {
-            Logger.getLogger(Profil.class.getName()).log(Level.SEVERE, null, ex);
-        }*/
-        return null;
-    }
-    
-/*
-    // Sauvegarde un DOM en XML
-    public void toXML(String nomFichier) {
-        try {
-            XMLUtil.DocumentTransform.writeDoc(_doc, nomFichier);
-        } catch (Exception ex) {
-            Logger.getLogger(Profil.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-*/
-    /// Takes a date in XML format (i.e. ????-??-??) and returns a date
-    /// in profile format: dd/mm/yyyy
-    public static String xmlDateToProfileDate(String xmlDate) {
-        String date;
-        // récupérer le jour
-        date = xmlDate.substring(xmlDate.lastIndexOf("-") + 1, xmlDate.length());
-        date += "/";
-        // récupérer le mois
-        date += xmlDate.substring(xmlDate.indexOf("-") + 1, xmlDate.lastIndexOf("-"));
-        date += "/";
-        // récupérer l'année
-        date += xmlDate.substring(0, xmlDate.indexOf("-"));
-
-        return date;
-    }
-
-    /// Takes a date in profile format: dd/mm/yyyy and returns a date
-    /// in XML format (i.e. ????-??-??)
-    public static String profileDateToXmlDate(String profileDate) {
-        String date;
-        // Récupérer l'année
-        date = profileDate.substring(profileDate.lastIndexOf("/") + 1, profileDate.length());
-        date += "-";
-        // Récupérer  le mois
-        date += profileDate.substring(profileDate.indexOf("/") + 1, profileDate.lastIndexOf("/"));
-        date += "-";
-        // Récupérer le jour
-        date += profileDate.substring(0, profileDate.indexOf("/"));
-
-        return date;
-    }
-
-    public String toString()
-    {
-        String strPartie = "Parties\n";
-        int nbPartie = this.parties.size();
-        int i = 0;
-        for ( Partie partie : this.parties )
-        {
-            i++;
-            strPartie += "  Partie " + i + " :\n" 
-                        +"        mot : "+partie.getMot()+"\n"
-                        +"        niveau : "+partie.getNiveau()+"\n";
-        }
-        return "nom : " + this.nom  
-                + "\n, dateNaissance : " + this.dateNaissance
-                + "\n, avatar : "+this.avatar
-                + "\n"+ strPartie;
     }
 }
+  /*
+    public Profil(String nom, String dateNaissance) {
+        this.nom = nom;
+        this.dateNaissance = dateNaissance;
+        avatar = nom+".png";
+        parties = new ArrayList<Partie>();
+        existe = true;
+        //toXML("src/xml/"+nom+".xml");
+    }
+    
+    public void ajouterPartie(Partie p) {
+        parties.add(p);
+    }
+    
+    public int getDernierNiveau() {
+        int niv = 0;
+        return niv;
+    }
+    
+    public String toString() {
+        return parties.size() + " parties pour ce profil";
+    }
+    
+    public void sauvegarder(String nomFichier) throws ParserConfigurationException, SAXException, IOException, TransformerConfigurationException, TransformerException {
+        DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+        DocumentBuilder parser = dbFactory.newDocumentBuilder();
+        
+        // element racine
+        Document doc = parser.newDocument() ;
+        Element profil = doc.createElement("profil");
+        doc.appendChild(profil);
+        // nom
+        Element nom = doc.createElement("nom");
+        nom.appendChild(doc.createTextNode(this.nom));
+        profil.appendChild(nom);
+        // avatar
+        Element avatar = doc.createElement("avatar");
+        avatar.appendChild(doc.createTextNode(this.avatar));
+        profil.appendChild(avatar);
+        
+        // date de naissance
+        Element anniv = doc.createElement("anniversaire");
+        anniv.appendChild(doc.createTextNode(this.dateNaissance));
+        profil.appendChild(anniv);
+        // parties
+        Element listeParties = doc.createElement("parties");
+        profil.appendChild(listeParties);
+        for (Partie e : parties) {
+            Element partie = doc.createElement("partie");
+            listeParties.appendChild(partie);
+            // attribut date
+            Attr a = doc.createAttribute("date");
+            a.setValue(e.getDate());
+            partie.setAttributeNode(a);
+            String trouv = "";
+            trouv += e.getTrouve();
+            // attribut trouvé
+            Attr a1 = doc.createAttribute("trouvé");
+            a1.setValue(trouv);
+            partie.setAttributeNode(a1);
+           
+            String tmp;
+            tmp = "";
+            tmp += e.getTemps();
+            // temps
+            Element temps = doc.createElement("temps");
+            temps.appendChild(doc.createTextNode(tmp));
+            partie.appendChild(temps);
+            // mot
+            Element mot = doc.createElement("mot");
+            mot.appendChild(doc.createTextNode(e.getMot()));
+            partie.appendChild(mot);
+            // attribut niveau
+            Attr a2 = doc.createAttribute("niveau");
+            
+            String nv;
+            nv = "";
+            nv += e.getNiveau();
+            a2.setValue(nv);
+            mot.setAttributeNode(a2); 
+        }
+        DOMSource source = new DOMSource(doc);
+        TransformerFactory transformerFactory = TransformerFactory.newInstance();
+        Transformer transformer = transformerFactory.newTransformer();
+        StreamResult result = new StreamResult(nomFichier);
+        transformer.transform(source, result);
+        System.out.println("Le fichier " + nomFichier + " a été créé");
+    }
+    
+    public String getNom() {
+        return nom;
+    }
+    public String getDateNaissance() {
+        return dateNaissance;
+    }
+    public String getAvatar() {
+        return avatar;
+    }
+   
+    
+}
+   
+*/
